@@ -1,0 +1,58 @@
+version: '3.1'
+services:
+  loja:
+    image: com.devapp.loja/loja:latest
+    ports:
+      - 8080:8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+#      - lojadata:/data
+    networks:
+      - testeNet
+#  sonarqube:
+#    image: sonarqube
+#    ports:
+#      - 9000:9000
+#    networks:
+#      - albusNet
+
+  portainer:
+    image: portainer/portainer:latest
+    ports:
+     - 9001:9000
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - testeNet
+
+#  postgreSQL:
+#    image: postgres
+##    restart: always
+#    environment:
+#      POSTGRES_USER: postgres
+#      POSTGRES_PASSWORD: postgres
+#      POSTGRES_DB: albus
+#    volumes:
+#      - /srv/docker/postgresql:/var/lib/postgresql
+#    ports:
+#      - 5433:5432
+#    networks:
+#          - testeNet
+
+volumes:
+  portainerdata:
+  loja:
+
+networks:
+  testeNet:
+    driver: bridge
+    ipam:
+      config:
+          - subnet: 172.22.0.0/16
+
+
+###
+#networks:
+#  defaults:
+#    external:
+#      name: nameBridge
